@@ -13,7 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+enum Category {
+  Coffee
+  Park
+  Study
+  FoodAndDrink
+  Entertainment
+}
 model User {
   id        String    @id @default(uuid())
   email     String    @unique
@@ -28,14 +34,14 @@ model Place {
   id          String     @id @default(uuid())
   title       String
   description String
-  lat         Float
-  lng         Float
-  category    String
+  lat         String?      // optional
+  lng         String?      // optional
+  category    Category
   createdAt   DateTime   @default(now())
-  imageUrl    String     
+  imageUrl    String?     
   authorId    String
   author      User        @relation(fields: [authorId], references: [id])
-  comments    Comment[]
+  comments    Comment[]n
   likes       Like[]
 }
 model Comment {
